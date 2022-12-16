@@ -5,75 +5,76 @@
         <input type="text"
                v-model="username"
                class="warpper__input__content"
-               placeholder="请输入手机号">
+               placeholder="请输入用户名">
     </div>
     <div class="warpper__input">
-        <input type="password"
+        <input type="text"
                v-model="password"
                class="warpper__input__content"
                placeholder="请输入密码">
     </div>
-    <button class="warpper__button" @click="handleLogin">登录</button>
+    <div class="warpper__input">
+        <input type="text"
+               v-model="ensurement"
+               class="warpper__input__content"
+               placeholder="确认密码">
+    </div>
+    <button class="warpper__button" @click="handleRegister">注册</button>
     <div class="warpper__text">
-        <span class="warpper__text__register" @click="handleRegisterClick">立即注册</span>
-        <span class="warpper__text__split">|</span>
-        <span class="warpper__text__forget">忘记密码</span>
+        <span class="warpper__text__register" @click="handleLoginClick">已有账号去登录</span>
     </div>
     <Toast v-if="show" :message="toastMessage"/>
   </div>
 </template>
 
 <script>
-import { reactive, toRefs } from 'vue'
 import { useRouter } from 'vue-router'
+import { reactive, toRefs } from 'vue'
 import { post } from '../../utils/request'
 import Toast, { useToastEffect } from '../../components/Toast'
 
-// 处理登录账号逻辑
-const useLoginEffect = (showToast) => {
-  // 获取路由的实例
+// 处理注册相关逻辑
+const useRegisterEffect = (showToast) => {
   const router = useRouter()
-  const data = reactive({ username: '', password: '' })
-  const handleLogin = async () => {
+  const data = reactive({ username: '', password: '', ensurement: '' })
+  const handleRegister = async () => {
     try {
-      const reslut = await post('/api/user/login', {
+      const reslut = await post('/api/user/register', {
         username: data.username,
-        password: data.password
+        password: data.password,
+        ensurement: data.ensurement
       })
       if (reslut?.errno === 0) {
         localStorage.isLogin = true
-        router.push({ name: 'Home' })
+        router.push({ name: 'Login' })
       } else {
-        showToast('登陆失败')
+        showToast('注册失败')
       }
     } catch (e) {
       showToast('请求失败')
     }
   }
-  const { username, password } = toRefs(data)
-  return { username, password, handleLogin }
+  const { username, password, ensurement } = toRefs(data)
+  return { username, password, ensurement, handleRegister }
 }
 
-// 处理跳转注册逻辑
-const handleRegisterEffect = () => {
+// 注册已有账号去登录逻辑
+const handleLoginEffect = () => {
   const router = useRouter()
-  const handleRegisterClick = () => {
-    // 路由的跳转
-    router.push({ name: 'Register' })
+  const handleLoginClick = () => {
+    router.push({ name: 'Login' })
   }
-  return { handleRegisterClick }
+  return { handleLoginClick }
 }
 
 export default {
-  name: 'Login',
+  name: 'Register',
   components: { Toast },
-  // 职责就是告诉你，代码执行的一个流程
   setup () {
     const { show, toastMessage, showToast } = useToastEffect()
-    const { username, password, handleLogin } = useLoginEffect(showToast)
-    const { handleRegisterClick } = handleRegisterEffect()
-
-    return { username, password, handleLogin, handleRegisterClick, show, toastMessage }
+    const { username, password, ensurement, handleRegister } = useRegisterEffect(showToast)
+    const { handleLoginClick } = handleLoginEffect()
+    return { show, toastMessage, username, password, ensurement, handleRegister, handleLoginClick }
   }
 }
 </script>
@@ -105,9 +106,6 @@ export default {
             border-radius: 6px;
             padding-left: .16rem;
             font-size: .16rem;
-            &::placeholder{
-              color: rgba(0,0,0,0.50);
-            }
         }
     }
     &__button{
@@ -125,9 +123,6 @@ export default {
         text-align: center;
         font-size: 14px;
         color: rgba(0,0,0,0.50);
-        &__split{
-            margin: 0 .135rem;
-        }
     }
 }
 </style>
