@@ -4,8 +4,10 @@
          class="docker__item"
          :class="{'docker__item--active': index === 0}"
          :key="item">
-      <div class="iconfont" v-html="item.iconfont"></div>
-      <div class="docker__title">{{item.text}}</div>
+      <router-link :to='item.to'>
+        <div class="iconfont" v-html="item.iconfont"></div>
+        <div class="docker__title">{{item.text}}</div>
+      </router-link>
     </div>
 
   </div>
@@ -16,10 +18,10 @@ export default {
   name: 'Docker',
   setup () {
     const dockerList = [
-      { iconfont: '&#xe6af;', text: '首页' },
-      { iconfont: '&#xe611;', text: '购物车' },
-      { iconfont: '&#xe7c5;', text: '订单' },
-      { iconfont: '&#xe635;', text: '我的' }
+      { iconfont: '&#xe6af;', text: '首页', to: { name: 'Home' } },
+      { iconfont: '&#xe611;', text: '购物车', to: { name: 'CartList' } },
+      { iconfont: '&#xe7c5;', text: '订单', to: { name: 'Home' } },
+      { iconfont: '&#xe635;', text: '我的', to: { name: 'Home' } }
     ]
     return { dockerList }
   }
@@ -31,7 +33,6 @@ export default {
 @import "../../style/mixins.scss";
 .docker {
   display: flex;
-  color: $content-fontcolor;
   position: absolute;
   box-sizing: border-box;
   padding: 0 0.18rem;
@@ -44,13 +45,19 @@ export default {
   &__item {
     flex: 1;
     text-align: center;
+    a{
+      color: $content-fontcolor;
+      text-decoration: none;
+    }
     .iconfont {
       margin: 0.07rem 0 0.02rem 0;
       font-size: 0.2rem;
     }
 
     &--active {
-      color: #1fa4fc;
+      a{
+        color: #1fa4fc;
+      }
     }
   }
   // 注意

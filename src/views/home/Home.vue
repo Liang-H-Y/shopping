@@ -6,7 +6,7 @@
     <Icons />
     <Nearby />
   </div>
-    <Docker />
+  <Docker />
 </template>
 
 <script>

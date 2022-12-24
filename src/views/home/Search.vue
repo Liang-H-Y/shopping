@@ -16,6 +16,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '../../style/viriables.scss';
 .search {
   position: relative;
   line-height: 0.32rem;
@@ -32,7 +33,7 @@ export default {
     width: 100%;
     height: 0.32rem;
     border: none;
-    background-color: #f5f5f5;
+    background-color: $input-bgColor;
     box-sizing: border-box;
     padding-left: 0.42rem;
     border-radius: 0.16rem;
