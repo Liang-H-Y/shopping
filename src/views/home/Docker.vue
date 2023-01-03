@@ -2,7 +2,7 @@
   <div class="docker">
     <div v-for="(item, index) in dockerList"
          class="docker__item"
-         :class="{'docker__item--active': index === 0}"
+         :class="{'docker__item--active': index === currentIndex }"
          :key="item">
       <router-link :to='item.to'>
         <div class="iconfont" v-html="item.iconfont"></div>
@@ -16,6 +16,7 @@
 <script>
 export default {
   name: 'Docker',
+  props: ['currentIndex'],
   setup () {
     const dockerList = [
       { iconfont: '&#xe6af;', text: '首页', to: { name: 'Home' } },
@@ -55,6 +56,7 @@ export default {
     }
 
     &--active {
+      color: #1fa4fc;
       a{
         color: #1fa4fc;
       }

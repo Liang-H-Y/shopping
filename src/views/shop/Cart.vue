@@ -77,7 +77,7 @@
       <span class="cart__info__total">&yen;{{ price }}</span>
     </div>
     <button class="cart__btn">
-      <router-link :to="{name: 'Home'}">
+      <router-link :to="{name: 'SubmitOrder'}">
       去结算
       </router-link>
     </button>

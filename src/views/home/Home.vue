@@ -6,7 +6,7 @@
     <Icons />
     <Nearby />
   </div>
-  <Docker />
+  <Docker :currentIndex = "0" />
 </template>
 
 <script>
