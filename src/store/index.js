@@ -6,13 +6,17 @@ const setLocalCartList = (state) => {
   localStorage.cartList = cartListString
 }
 
-// const getLocalCartList = () => {
-//   return JSON.parse(localStorage.cartList) || {}
-// }
+const getLocalCartList = () => {
+  try {
+    return JSON.parse(localStorage.cartList)
+  } catch (e) {
+    return {}
+  }
+}
 
 export default createStore({
   state: {
-    cartList: {}
+    cartList: getLocalCartList()
   },
   getters: {},
   mutations: {
@@ -41,7 +45,8 @@ export default createStore({
     changeShopName (state, payload) {
       const { shopId, shopName } = payload
       const shopInfo = state.cartList[shopId] || {
-        shopName: '', productList: {}
+        shopName: '',
+        productList: {}
       }
       shopInfo.shopName = shopName
       state.cartList[shopId] = shopInfo
@@ -68,6 +73,10 @@ export default createStore({
         }
       }
       setLocalCartList(state)
+    },
+    ClearCartData (state, payload) {
+      const { shopId } = payload
+      state.cartList[shopId] = {}
     }
   }
 })

@@ -16,14 +16,14 @@ const routes = [
   },
   {
     path: '/submit/:id',
-    name: 'SubmitOrder',
-    component: () => import(/* webpackChunkName:"shop" */ '../views/submit/SubmitOrder')
+    name: 'Submit',
+    component: () =>
+      import(/* webpackChunkName:"submit" */ '../views/submit/Submit')
   },
   {
     path: '/cartList',
     name: 'CartList',
-    component: () =>
-      import(/* webpackChunkName:"shop" */ '../views/cartList/CartList')
+    component: () => import(/* webpackChunkName:"cartList" */ '../views/cartList/CartList')
   },
   {
     path: '/register',

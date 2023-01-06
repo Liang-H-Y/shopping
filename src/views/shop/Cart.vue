@@ -77,7 +77,7 @@
       <span class="cart__info__total">&yen;{{ price }}</span>
     </div>
     <button class="cart__btn">
-      <router-link :to="{name: 'SubmitOrder'}">
+      <router-link :to="{name: 'Submit'}">
       去结算
       </router-link>
     </button>
@@ -87,11 +87,11 @@
 <script>
 import { computed, ref } from 'vue'
 import { useStore } from 'vuex'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import { useCommonCartEffect } from './commonUseCartEffect'
 
 // 获取购物车信息逻辑
-const useCartEffect = (shopId) => {
+const useCartEffect = (shopId, router) => {
   const { changeCartItemInfo } = useCommonCartEffect()
   const store = useStore()
   const cartList = store.state.cartList
@@ -152,6 +152,12 @@ const useCartEffect = (shopId) => {
     store.commit('setCartItemsChecked', { shopId })
   }
 
+  // const toSubmit = (router) => {
+  //   if (productList.value === null) return
+  //   console.log(productList.value.length)
+  //   // router.push('SubmitOrder')
+  // }
+
   return {
     total,
     price,
@@ -177,6 +183,7 @@ export default {
   name: 'Cart',
   setup () {
     const route = useRoute()
+    const router = useRouter()
     const shopId = route.params.id
 
     const { showCart, handleCartShowChange } = toggleCartEffect()
@@ -189,7 +196,7 @@ export default {
       changeCartItemChecked,
       cleanCartProducts,
       setCartItemsChecked
-    } = useCartEffect(shopId)
+    } = useCartEffect(shopId, router)
     return {
       total,
       price,

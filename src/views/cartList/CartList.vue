@@ -1,34 +1,36 @@
 <template>
   <div class="cartlist">
     <div class="cartlist__title">我的全部购物车 (2)</div>
-    <div v-for="item in cartList" :key="item.shopId" class="cartlist__cart">
-      <p class="cartlist__cart__title">{{ item.shopName }}</p>
-      <div
-        class="cartlist__cart__content"
-        v-for="product in item.productList"
-        v-show="product._id <= 2 || showList"
-        :key="product._id"
-      >
-        <img :src="product.imgUrl" class="cartlist__cart__img" />
-        <div class="cartlist__cart__info">
-          <p class="cartlist__cart__name">{{ product.name }}</p>
-          <span class="cartlist__cart__price"
-            >￥{{ product.price }} × {{ product.count }}</span
-          >
-          <span class="cartlist__cart__total"
-            >￥{{ (product.price * product.count).toFixed(2) }}</span
-          >
+    <template v-for="item in cartList" :key="item.shopId">
+      <div class="cartlist__cart" v-if="item.shopName != '' ">
+        <p class="cartlist__cart__title">{{ item.shopName }}</p>
+        <div
+          class="cartlist__cart__content"
+          v-for="product in item.productList"
+          v-show="product._id <= 2 || showList"
+          :key="product._id"
+        >
+          <img :src="product.imgUrl" class="cartlist__cart__img" />
+          <div class="cartlist__cart__info">
+            <p class="cartlist__cart__name">{{ product.name }}</p>
+            <span class="cartlist__cart__price"
+              >￥{{ product.price }} × {{ product.count }}</span
+            >
+            <span class="cartlist__cart__total"
+              >￥{{ (product.price * product.count).toFixed(2) }}</span
+            >
+          </div>
+        </div>
+        <div
+          class="cart__cart__hidden"
+          v-if="getLength(item.productList) > 2"
+          @click="showProduct"
+        >
+          共计{{ getLength(item.productList) }}件/1.4kg
+          <div class="cart__cart__hidden__icon"></div>
         </div>
       </div>
-      <div
-        class="cart__cart__hidden"
-        v-if="getLength(item.productList) > 2"
-        @click="showProduct"
-      >
-        共计{{ getLength(item.productList) }}件/1.4kg
-        <div class="cart__cart__hidden__icon"></div>
-      </div>
-    </div>
+    </template>
   </div>
   <Docker :currentIndex="1" />
 </template>
