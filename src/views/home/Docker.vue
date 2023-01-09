@@ -21,7 +21,7 @@ export default {
     const dockerList = [
       { iconfont: '&#xe6af;', text: '首页', to: { name: 'Home' } },
       { iconfont: '&#xe611;', text: '购物车', to: { name: 'CartList' } },
-      { iconfont: '&#xe7c5;', text: '订单', to: { name: 'Home' } },
+      { iconfont: '&#xe7c5;', text: '订单', to: { name: 'OrderList' } },
       { iconfont: '&#xe635;', text: '我的', to: { name: 'Home' } }
     ]
     return { dockerList }
@@ -42,6 +42,7 @@ export default {
   width: 100%;
   height: 0.48rem;
   border: 0.01px solid #f1f1f1;
+  overflow: hidden;
   // 注意
   &__item {
     flex: 1;

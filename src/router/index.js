@@ -21,9 +21,16 @@ const routes = [
       import(/* webpackChunkName:"submit" */ '../views/submit/Submit')
   },
   {
+    path: '/orderList',
+    name: 'OrderList',
+    component: () =>
+      import(/* webpackChunkName:"order" */ '../views/orderList/OrderList')
+  },
+  {
     path: '/cartList',
     name: 'CartList',
-    component: () => import(/* webpackChunkName:"cartList" */ '../views/cartList/CartList')
+    component: () =>
+      import(/* webpackChunkName:"cartList" */ '../views/cartList/CartList')
   },
   {
     path: '/register',

@@ -2,24 +2,28 @@
   <!-- 有空可以封装一下这个组件 -->
   <div class="cartlist__cart">
     <p class="cartlist__cart__title">{{ shopName }}</p>
-    <div
-      class="cartlist__cart__content"
-      v-for="(product, index) in productList"
-      v-show="index <= 2 || showList"
-      :key="product._id"
-    >
-      <img :src="product.imgUrl" class="cartlist__cart__img" />
-      <div class="cartlist__cart__info">
-        <p class="cartlist__cart__name">{{ product.name }}</p>
-        <span class="cartlist__cart__price"
-          >￥{{ product.price }} × {{ product.count }}</span
-        >
-        <span class="cartlist__cart__total"
-          >￥{{ (product.price * product.count).toFixed(2) }}</span
-        >
+    <template v-for="(product, index, innerIndex) in productList" :key="product._id">
+      <div
+        class="cartlist__cart__content"
+        v-show="innerIndex < 2 || showList"
+      >
+        <img :src="product.imgUrl" class="cartlist__cart__img" />
+        <div class="cartlist__cart__info">
+          <p class="cartlist__cart__name">{{ product.name }}</p>
+          <span class="cartlist__cart__price"
+            >￥{{ product.price }} × {{ product.count }}</span
+          >
+          <span class="cartlist__cart__total"
+            >￥{{ (product.price * product.count).toFixed(2) }}</span
+          >
+        </div>
       </div>
-    </div>
-    <div class="cart__cart__hidden" v-if="total > 2" @click="showProduct">
+    </template>
+    <div
+      class="cart__cart__hidden"
+      v-if="total > 2"
+      @click="showProduct"
+    >
       共计{{ total }}件/1.4kg
       <div class="cart__cart__hidden__icon"></div>
     </div>

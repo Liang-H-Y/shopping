@@ -47,7 +47,10 @@ export const useSubmitEffect = () => {
   // 计算 pruductList 是数量
   let total = computed(() => {
     let num = 0
-    for (let i in productList.value) num = i
+    for (let index in productList.value) {
+      num++
+      console.log(index)
+    }
     return num
   })
 

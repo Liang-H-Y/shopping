@@ -56,7 +56,7 @@ const submitOrderClick = () => {
     showDialog.value = !showDialog.value
     // 或者不需要这个参数，直接 submitSureClick 后自动返回，这里是为了关闭按钮的功能
     if (!element) {
-      router.push({ name: 'Home' })
+      router.push({ name: 'OrderList' })
     }
   }
   return { showDialog, handleClick }
@@ -95,7 +95,7 @@ const handleOrder = () => {
       if (reslut?.errno === 0) {
         store.commit('ClearCartData', { shopId })
         if (isCanceled) {
-          router.push({ name: 'Home' })
+          router.push({ name: 'OrderList' })
         }
       }
     } catch (e) {

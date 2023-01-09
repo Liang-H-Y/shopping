@@ -2,6 +2,26 @@ import { createStore } from 'vuex'
 
 const setLocalCartList = (state) => {
   const { cartList } = state
+
+  // 过滤 productList、 shopId 为空的
+  for (let shopId in cartList) {
+    const noEmptyList = {}
+    let flag = true
+    const noEmptyproductList = cartList[shopId]?.productList || {}
+    for (let i in noEmptyproductList) {
+      const product = noEmptyproductList[i]
+      if (product.count > 0) {
+        flag = false
+        noEmptyList[i] = product
+      }
+    }
+    if (flag) {
+      delete cartList[shopId]
+    } else {
+      cartList[shopId].productList = noEmptyList
+    }
+  }
+
   const cartListString = JSON.stringify(cartList)
   localStorage.cartList = cartListString
 }
@@ -18,7 +38,8 @@ export default createStore({
   state: {
     cartList: getLocalCartList()
   },
-  getters: {},
+  getters: {
+  },
   mutations: {
     changeCartItemInfo (state, payload) {
       const { shopId, productId, productInfo, num } = payload
@@ -76,7 +97,8 @@ export default createStore({
     },
     ClearCartData (state, payload) {
       const { shopId } = payload
-      state.cartList[shopId] = {}
+      delete state.cartList[shopId]
+      setLocalCartList(state)
     }
   }
 })
